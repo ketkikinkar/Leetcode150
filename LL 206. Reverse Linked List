@@ -1,0 +1,79 @@
+206. Reverse Linked List
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+Example 1:
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+Example 2:
+Input: head = [1,2]
+Output: [2,1]
+Example 3:
+
+Input: head = []
+Output: []
+
+Constraints:
+
+The number of nodes in the list is the range [0, 5000].
+-5000 <= Node.val <= 5000
+
+Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        #Two Pointer Approach T O(n); M O(1)
+        """
+        prev, curr = None, head
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        return prev """
+        # recursive approach T O(n) M O(n)
+        if not head:
+            return None
+        newHead = head
+        if head.next:
+            newHead = self.reverseList(head.next)
+            head.next.next = head
+        head.next = None
+        return newHead
+    
+"""
+Brief Overview: Start with a brief overview of the problem. "The task is to reverse a singly linked list, where we receive the head of the list and must return the head of the new reversed list."
+
+Explain the Iterative Method:
+
+Initialization: "First, I initialize two pointers, prev and curr. prev starts as None and curr starts at the head of the list."
+Traversal: "As I traverse the list, I'll temporarily store the next node (nxt = curr.next) to prevent losing access to the rest of the list when I rearrange the pointers."
+Reversing Pointers: "Then, I set curr.next to prev to reverse the link. After that, I advance the prev and curr pointers one step forward in the list."
+End of List: "The loop continues until curr is None, meaning I've reached the end of the list and prev is now the new head of the reversed list."
+Explain the Recursive Method:
+
+Base Case: "If the list is empty (head is None), I return None immediately. This is the base case for recursion."
+Recursive Call: "If there is a next node, I make a recursive call with head.next. This call will continue until we reach the end of the list, which becomes the new head (newHead)."
+Reversing Pointers: "After reaching the base case, as the recursion unwinds, I set the next of the next node (head.next.next) to point back to head, effectively reversing the link."
+Final Adjustment: "Finally, to complete the reversal, I set head.next to None to break the original next link."
+"""
+
+"""
+Iterative Method:
+
+Time Complexity: O(n), where n is the number of nodes in the list. Each node is visited once.
+Space Complexity: O(1), as the space used does not depend on the size of the input list. Only two pointers are used, regardless of list size.
+Recursive Method:
+
+Time Complexity: O(n), similar to the iterative method since each node is visited once during the recursion.
+Space Complexity: O(n), due to the recursion stack. In the worst case, the stack will have n calls if the list has n nodes.
+
+Follow up:
+"Are there any specific constraints on the values in the nodes? For example, are all values unique, or could there be duplicates?"
+Return Type: "Should the function return a new list object, or modify the existing list in place?"
+"""
+            
